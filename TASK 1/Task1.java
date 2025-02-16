@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class Task1 {
     public static void main(String[] args) {
-        int[] originalArray = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; // Example array
+        int[] originalArray = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; 
         
 
         int newSize = (originalArray.length + 1) / 2;
