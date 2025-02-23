@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <h1>📊 Progress Tracker</h1>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="create.html">Create Routine</a></li>
+                <li><a href="myroutines.html">My Routines</a></li>
+                <li><a href="progress.html" class="active">Progress Tracker</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="progress">
+            <h2>🚀 Workout Progress Over Time</h2>
+            <canvas id="progressChart"></canvas>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Fitness Planner | Keep Pushing Forward! 💪</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let progressData = JSON.parse(localStorage.getItem("routines")) || [
+                { exercise: "Day 1", duration: 30 },
+                { exercise: "Day 2", duration: 45 },
+                { exercise: "Day 3", duration: 25 },
+                { exercise: "Day 4", duration: 50 },
+                { exercise: "Day 5", duration: 40 }
+            ];
+
+            let labels = progressData.map(routine => routine.exercise);
+            let data = progressData.map(routine => parseInt(routine.duration));
+
+            let ctx = document.getElementById("progressChart").getContext("2d");
+
+            let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, "rgba(255, 99, 132, 0.8)");
+            gradient.addColorStop(1, "rgba(54, 162, 235, 0.2)");
+
+            new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: "Workout Duration (mins)",
+                        data: data,
+                        borderColor: "#ffeb3b",
+                        backgroundColor: gradient,
+                        pointBackgroundColor: "white",
+                        pointBorderColor: "#ffeb3b",
+                        pointRadius: 5,
+                        pointHoverRadius: 8,
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: {
+                        duration: 1500,
+                        easing: "easeInOutQuad"
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: "white"
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: "white" },
+                            grid: { color: "rgba(255, 255, 255, 0.2)" }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: "white" },
+                            grid: { color: "rgba(255, 255, 255, 0.2)" }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
